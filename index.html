@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise - Access Gate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pink-soft': '#f7cac9',
+                        'lavender': '#e0b0ff',
+                        'accent': '#ff69b4',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    keyframes: {
+                        accessGranted: {
+                             '0%': { opacity: '0', transform: 'scale(0.5) rotate(-10deg)' },
+                             '50%': { opacity: '1', transform: 'scale(1.1) rotate(5deg)' },
+                             '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+                        },
+                    },
+                    animation: {
+                        'access-granted': 'accessGranted 1.5s ease-out forwards',
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center p-5 bg-gradient-to-br from-pink-soft to-lavender font-sans text-gray-800">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-800">🗝️ A Heartfelt Challenge</h1>
+        <p class="mt-2 text-lg">Answer these 10 questions correctly to unlock your birthday website!</p>
+    </header>
+
+    <div class="bg-white/90 backdrop-blur-sm shadow-xl rounded-3xl p-10 quiz-screen quiz-card w-11/12 max-w-lg text-center animate-fade-in">
+        <div id="quiz-container">
+            Loading Quiz...
+        </div>
+        <p id="progress-text" class="mt-4 text-gray-500"></p>
+        <p id="access-status" class="font-serif text-3xl text-accent hidden mt-8"></p>
+    </div>
+
+    <script src="assets/js/quiz.js"></script>
+</body>
+</html>

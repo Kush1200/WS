@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey - Timeline</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'romantic-pink': '#ff85a2',
+                        'romantic-purple': '#a78bfa',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        handwritten: ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #fbcfe8, #e9d5ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Timeline vertical line */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: rgba(255, 133, 162, 0.3);
+            z-index: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #ff85a2;
+            border-radius: 50%;
+            border: 4px solid white;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(255, 133, 162, 0.6);
+        }
+
+        .timeline-item { opacity: 0; }
+
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+            .timeline-dot { left: 20px; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pt-32 pb-20">
+
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+        <div class="glass-card rounded-full px-8 py-4 flex justify-between items-center text-gray-700 font-semibold text-[10px] sm:text-xs md:text-sm">
+            <a href="home.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Home</a>
+            <a href="photos.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Photos</a>
+            <a href="letter.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Letter</a>
+            <a href="timeline.html" class="hover:text-romantic-pink transition-colors border-b-2 border-romantic-pink">Timeline</a>
+            <a href="playlist.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Playlist</a>
+            <a href="together.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Time Since</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6">
+        <header class="text-center mb-24">
+            <h1 class="text-6xl md:text-8xl font-serif text-gray-800 mb-6" id="header-title">Our Journey</h1>
+            <p class="font-handwritten text-romantic-pink text-3xl md:text-5xl" id="header-subtitle">No more relying on the notes app :p</p>
+        </header>
+
+        <div class="relative max-w-5xl mx-auto">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-item relative mb-24 md:flex justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-right">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Nov 12, 2023</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">Its a match!</h3>
+                        <p class="text-gray-500 font-light">God Bless Bumble</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                         <lottie-player src="swipe right.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex flex-row-reverse justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-left">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Mar 31, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">The first hangout</h3>
+                        <p class="text-gray-500 font-light">Man my ears were warm</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                         <lottie-player src="HotCoffee.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%]">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-right">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">May 18, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">First Kiss</h3>
+                        <p class="text-gray-500 font-light">(And More hehehe)</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                         <lottie-player src="love kiss.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex flex-row-reverse justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-left">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">May 22, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">The First Time I - </h3>
+                        <p class="text-gray-500 font-light text-sm">Kissed your hand, called you jaana, and yes, the first time I...</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Water Splash.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-right">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Sept 02, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">Walk Out</h3>
+                        <p class="text-gray-500 font-light text-sm">When you decided its better if you walk out and it literally scared the shit out of me</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Door open.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="timeline-item relative mb-24 md:flex flex-row-reverse justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-left">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Oct 03, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">Made Up My Mind</h3>
+                        <p class="text-gray-500 font-light text-sm">The day I decided that I am going to ask you to be my girlfriend</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Calendar Booking.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-right">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Nov 12, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">And So I Asked</h3>
+                        <p class="text-gray-500 font-light text-sm">A short, beautiful memory description here.</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Hearts.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex flex-row-reverse justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-left">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Nov 17, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">Do I even need to say?</h3>
+                        <p class="text-gray-500 font-light text-sm">Happy Birthday Priya Didi 🎉</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Mouth.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-right">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Nov 19, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">First Fight</h3>
+                        <p class="text-gray-500 font-light text-sm">"We did it and now he lost interest"</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="Battle.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative mb-24 md:flex flex-row-reverse justify-between items-center w-full">
+                <div class="timeline-dot top-0 md:top-1/2"></div>
+                <div class="md:w-[45%] mb-8 md:mb-0">
+                    <div class="glass-card rounded-[2.5rem] p-8 text-center md:text-left">
+                        <span class="text-romantic-pink font-bold tracking-widest uppercase text-sm">Dec 31, 2024</span>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800 my-2">We Celebrated New Years Eve</h3>
+                        <p class="text-gray-500 font-light text-sm">(Really Quickly)</p>
+                    </div>
+                </div>
+                <div class="md:w-[45%] flex justify-center">
+                    <div class="w-40 h-40">
+                        <lottie-player src="celebration.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="mt-32 mb-20 text-center opacity-0 transform translate-y-10" id="timeline-footer">
+            <div class="glass-card max-w-3xl mx-auto rounded-[3rem] p-12">
+                <p class="font-handwritten text-romantic-pink text-3xl md:text-4xl mb-6 leading-relaxed">
+                    "Every moment with you is important to me. <br class="hidden md:block"> 
+                    If only I could note it all over here"
+                </p>
+                <p class="text-gray-500 font-light text-sm md:text-base italic">
+                    P.S: If I forgot any important dates, let me know and I will add them here.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 hover:-rotate-12 active:scale-95 transition-all duration-300 shadow-2xl opacity-0">
+        <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
+    </button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            // 1. Staggered Header Animation
+            tl.to(".title-word", { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1, 
+                stagger: 0.3, 
+                ease: "back.out(1.7)" 
+            })
+            .to("#header-subtitle", { 
+                opacity: 1, 
+                scale: 1, 
+                duration: 1.2, 
+                ease: "power4.out" 
+            }, "-=0.5");
+
+            // 2. Scroll Animation for Timeline Items
+            const items = document.querySelectorAll(".timeline-item");
+            items.forEach((item, index) => {
+                gsap.to(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: -20,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    delay: index % 2 === 0 ? 0.1 : 0.2 // Slight variation in feel
+                });
+            });
+
+            // 3. Final Note Animation
+            gsap.to("#timeline-footer", {
+                scrollTrigger: {
+                    trigger: "#timeline-footer",
+                    start: "top 90%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "power4.out"
+            });
+            // 4. Confetti Button Entry
+            tl.to("#confetti-btn", { 
+                opacity: 1, 
+                duration: 1, 
+                ease: "back.out(1.7)" 
+            }, "-=0.5");
+
+            // 5. Confetti Interaction Logic
+            document.getElementById('confetti-btn').addEventListener('click', () => {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff85a2', '#fce7f3', '#ffb3c1', '#ffffff']
+                });
+            });
+
+            
+        };
+    </script>
+
+</body>
+</html>

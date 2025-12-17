@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Future Plans</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .future-card {
+            background-color: var(--color-light);
+            border-left: 5px solid var(--color-accent);
+            padding: 25px;
+            opacity: 0; /* Initial state for fade-in */
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .future-card:hover {
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+        }
+        .plan-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .future-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="home.html">🏠 Home</a>
+        <a href="photos.html">📸 Photos</a>
+        <a href="letter.html">💌 Letter</a>
+        <a href="timeline.html">🗓️ Timeline</a>
+        <a href="playlist.html">🎶 Playlist</a>
+        <a href="future.html">🚀 Future</a>
+        <a id="surprise-link" href="#">🎁 Surprise</a>
+    </nav>
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1>🚀 Dreaming Our Future Together</h1>
+            <p>A list of promises, places, and unforgettable moments yet to come.</p>
+        </header>
+
+        <div class="future-grid" id="future-grid">
+            <div class="card future-card">
+                <span class="plan-icon">✈️</span>
+                <h3>The Grand Trip</h3>
+                <p>Visiting Japan in the Spring to see the cherry blossoms together.</p>
+            </div>
+            <div class="card future-card">
+                <span class="plan-icon">🍷</span>
+                <h3>Weekly Date Night</h3>
+                <p>A promise to reserve one night a week for a new recipe or a quiet movie night, no phones allowed.</p>
+            </div>
+            <div class="card future-card">
+                <span class="plan-icon">📚</span>
+                <h3>The Book Challenge</h3>
+                <p>Read the same classic novel and discuss it over fancy tea.</p>
+            </div>
+            <div class="card future-card">
+                <span class="plan-icon">🏡</span>
+                <h3>Our Cozy Home</h3>
+                <p>Finding a place with a small backyard for us and Biscotti (the future dog).</p>
+            </div>
+            <div class="card future-card">
+                <span class="plan-icon">🌟</span>
+                <h3>Stargazing</h3>
+                <p>Take a weekend trip far away from the city lights just to see the Milky Way.</p>
+            </div>
+            <div class="card future-card">
+                <span class="plan-icon">🗺️</span>
+                <h3>South America</h3>
+                <p>Backpacking across Patagonia—a dream adventure of ours!</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Intersection Observer for soft fade-in animation (re-used logic)
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.future-card');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            items.forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+    <script src="assets/js/navigation.js"></script>
+</body>
+</html>

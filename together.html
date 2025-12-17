@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Since - Together Forever</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'romantic-pink': '#ff85a2',
+                        'romantic-purple': '#a78bfa',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        handwritten: ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #fbcfe8, #e9d5ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            overflow-y: auto; 
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        .timer-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #1f2937;
+        }
+
+        .timer-val-large {
+            font-size: 3.5rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #1f2937;
+        }
+
+        .timer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #ff85a2;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen pt-32 pb-24">
+
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+        <div class="glass-card rounded-full px-8 py-4 flex justify-between items-center text-gray-700 font-semibold text-[10px] sm:text-xs md:text-sm">
+            <a href="home.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Home</a>
+            <a href="photos.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Photos</a>
+            <a href="letter.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Letter</a>
+            <a href="timeline.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Timeline</a>
+            <a href="playlist.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Playlist</a>
+            <a href="together.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Time Since</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 text-center">
+        <header class="mb-16 opacity-0" id="header">
+            <h1 class="font-handwritten text-romantic-pink text-4xl md:text-6xl mb-6 leading-tight">
+                "Lets see how many days has it been since..."
+            </h1>
+            <p class="text-gray-600 font-serif italic text-xl">So that we dont have to mentally calculated each time</p>
+        </header>
+
+        <div class="flex flex-col items-center space-y-10">
+            
+            <div class="timer-card glass-card rounded-[3rem] p-10 w-full max-w-2xl opacity-0 transform translate-y-10">
+                <h2 class="text-gray-400 tracking-[0.4em] uppercase text-xs mb-6">Since you were born</h2>
+                <div class="flex justify-center gap-6 md:gap-10">
+                    <div class="flex flex-col items-center">
+                        <span id="days-born" class="timer-val">00000</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timer-card glass-card rounded-[3rem] p-10 w-full max-w-2xl opacity-0 transform translate-y-10">
+                <h2 class="text-gray-400 tracking-[0.4em] uppercase text-xs mb-6">Since we matched</h2>
+                <div class="flex justify-center gap-6 md:gap-10 text-center">
+                    <div class="flex flex-col items-center">
+                        <span id="days-match" class="timer-val">000</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timer-card glass-card rounded-[3rem] p-10 w-full max-w-2xl opacity-0 transform translate-y-10">
+                <h2 class="text-gray-400 tracking-[0.4em] uppercase text-xs mb-6">Since we first kissed</h2>
+                <div class="flex justify-center gap-6 md:gap-10 text-center">
+                    <div class="flex flex-col items-center">
+                        <span id="days-kiss" class="timer-val">000</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timer-card glass-card rounded-[3.5rem] p-12 w-full max-w-3xl opacity-0 transform translate-y-10 border-2 border-romantic-pink/20">
+                <h2 class="text-romantic-pink tracking-[0.4em] uppercase text-xs font-bold mb-8">Since you've been mine</h2>
+                <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+                    <div class="flex flex-col items-center">
+                        <span id="days-mine" class="timer-val-large">000</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="hours-mine" class="timer-val-large">00</span>
+                        <span class="timer-label">Hours</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="mins-mine" class="timer-val-large text-3xl md:text-5xl">00</span>
+                        <span class="timer-label">Mins</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="secs-mine" class="timer-val-large text-3xl md:text-5xl">00</span>
+                        <span class="timer-label">Secs</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 hover:-rotate-12 active:scale-95 transition-all duration-300 shadow-2xl opacity-0">
+        <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
+    </button>
+
+    <script>
+        // DATE CONFIGURATION
+        const birthDate = new Date("2002-01-07T22:35:00"); 
+        const matchDate = new Date("2023-11-12T00:00:00"); 
+        const kissDate = new Date("2024-05-18T00:00:00");  
+        const mineDate = new Date("2024-11-12T00:00:00");  
+
+        function updateTimers() {
+            const now = new Date();
+
+            // 1. Birthday Timer
+            const diffBorn = now - birthDate;
+            document.getElementById('days-born').innerText = Math.floor(diffBorn / (1000 * 60 * 60 * 24)).toLocaleString();
+
+            // 2. Match Timer
+            const diffMatch = now - matchDate;
+            document.getElementById('days-match').innerText = Math.floor(diffMatch / (1000 * 60 * 60 * 24));
+
+            // 3. Kiss Timer
+            const diffKiss = now - kissDate;
+            document.getElementById('days-kiss').innerText = Math.floor(diffKiss / (1000 * 60 * 60 * 24));
+
+            // 4. Main Counter (Since You've Been Mine)
+            const diffMine = now - mineDate;
+            const d = Math.floor(diffMine / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diffMine / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diffMine / (1000 * 60)) % 60);
+            const s = Math.floor((diffMine / 1000) % 60);
+
+            document.getElementById('days-mine').innerText = d.toString().padStart(3, '0');
+            document.getElementById('hours-mine').innerText = h.toString().padStart(2, '0');
+            document.getElementById('mins-mine').innerText = m.toString().padStart(2, '0');
+            document.getElementById('secs-mine').innerText = s.toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimers, 1000);
+        updateTimers();
+
+        window.onload = () => {
+            const tl = gsap.timeline();
+            tl.to("#header", { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" })
+              .to(".timer-card", { 
+                  opacity: 1, 
+                  y: 0, 
+                  duration: 1.2, 
+                  stagger: 0.3, 
+                  ease: "power4.out" 
+              }, "-=1")
+              .to("#confetti-btn", { opacity: 1, duration: 1, ease: "back.out(1.7)" }, "-=0.5");
+
+            document.getElementById('confetti-btn').addEventListener('click', () => {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff85a2', '#fce7f3', '#ffb3c1', '#ffffff']
+                });
+            });
+        };
+    </script>
+</body>
+</html>

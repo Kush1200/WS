@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Love Letter to You</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .letter-container {
+            max-width: 800px;
+            padding: 50px 70px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 5px solid var(--color-pink-soft);
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.3); /* Soft glow */
+            font-family: 'Playfair Display', serif; /* Elegant letter font */
+            line-height: 1.8;
+            font-size: 1.15em;
+            text-align: left;
+            white-space: pre-wrap; /* Preserves formatting of the placeholder text */
+        }
+        .letter-container p {
+            margin-bottom: 25px;
+            opacity: 0; /* Hidden initially for typewriter effect */
+            transition: opacity 0.5s ease-in;
+        }
+        .signature {
+            margin-top: 40px;
+            font-size: 1.5em;
+            font-style: italic;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="home.html">🏠 Home</a>
+        <a href="photos.html">📸 Photos</a>
+        <a href="letter.html">💌 Letter</a>
+        <a href="timeline.html">🗓️ Timeline</a>
+        <a href="playlist.html">🎶 Playlist</a>
+        <a href="future.html">🚀 Future</a>
+        <a id="surprise-link" href="#">🎁 Surprise</a>
+    </nav>
+    <div class="container letter-container">
+        <h1 style="text-align: center; margin-bottom: 30px; font-size: 2.5em; color: var(--color-accent);">My Dearest Love,</h1>
+        
+        <div id="letter-content">
+            <p>On your special day, I wanted to tell you again what a miracle it is to have you in my life. Before you, my world was in black and white; now, every day is painted in the softest blush and the brightest lavender, just like this little corner of the internet I built for you.</p>
+
+            <p>Do you remember that night we first stayed up talking until sunrise? It wasn't just a conversation; it was the moment our souls recognized each other. It was the first page of our favorite book, the quiet melody before the grandest symphony. Every memory since then is a treasure I hold close.</p>
+
+            <p>You have a way of seeing the good in the world, of making even the most ordinary moments feel extraordinary. Your laughter is the sound I want to bottle up and play on repeat, and your presence is the comfort I crave after a long day. You are my home, my anchor, and my greatest adventure.</p>
+
+            <p>This website is a small dedication to the big love we share. Explore the photos, remember our timeline, and dream with me about the future. I hope it makes you feel even a fraction of the happiness you bring me every single day.</p>
+            
+            <p>Happy Birthday, my everything. My love for you only grows stronger with every breath I take.</p>
+
+            <p class="signature">Forever Yours,</p>
+            <p class="signature">[Your Name Here]</p>
+        </div>
+    </div>
+
+    <script>
+        // Simple typewriter/fade-in animation for the letter
+        document.addEventListener('DOMContentLoaded', () => {
+            const paragraphs = document.querySelectorAll('#letter-content p');
+            paragraphs.forEach((p, index) => {
+                setTimeout(() => {
+                    p.style.opacity = '1';
+                }, index * 300); // 300ms delay per paragraph
+            });
+        });
+    </script>
+    <script src="assets/js/navigation.js"></script>
+</body>
+</html>
