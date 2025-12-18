@@ -3,123 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Playlist</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Our Soundtrack - Playlist</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'romantic-pink': '#ff85a2' },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        handwritten: ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        .playlist-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .playlist-card {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            transition: background-color 0.3s ease;
-        }
-        .playlist-card:hover {
-            background-color: var(--color-pink-soft);
-        }
-        .song-details {
-            margin-left: 20px;
-        }
-        .song-title {
+        body {
+            background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #fbcfe8, #e9d5ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
             margin: 0;
-            font-size: 1.3em;
-            color: var(--color-accent);
-        }
-        .song-caption {
-            margin: 5px 0 0 0;
-            font-style: italic;
-            font-size: 0.9em;
-        }
-        /* Spotify Embed - Responsive container */
-        .embed-container {
-            position: relative;
-            padding-bottom: 100%; /* For 1:1 aspect ratio in embeds */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #f0f0f0;
-            border-radius: 15px;
-        }
-        .embed-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
         }
 
-        /* Adjust for desktop layout */
-        @media (min-width: 768px) {
-            .playlist-layout {
-                grid-template-columns: 2fr 1fr; /* Two-thirds for details, one-third for embed */
-            }
-            .embed-container {
-                 padding-bottom: 0; /* Reset aspect ratio for desktop */
-                 height: 500px; /* Fixed height for visual balance */
-            }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            color: #ff85a2;
+            opacity: 0;
+            z-index: 10;
         }
     </style>
 </head>
-<body>
-    <nav class="nav-bar">
-        <a href="home.html">🏠 Home</a>
-        <a href="photos.html">📸 Photos</a>
-        <a href="letter.html">💌 Letter</a>
-        <a href="timeline.html">🗓️ Timeline</a>
-        <a href="playlist.html">🎶 Playlist</a>
-        <a href="future.html">🚀 Future</a>
-        <a id="surprise-link" href="#">🎁 Surprise</a>
+<body class="min-h-screen pt-32 pb-20">
+
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+        <div class="glass-card rounded-full px-8 py-4 flex justify-between items-center text-gray-700 font-semibold text-[10px] sm:text-xs md:text-sm">
+            <a href="home.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Home</a>
+            <a href="photos.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Photos</a>
+            <a href="letter.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Letter</a>
+            <a href="timeline.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Timeline</a>
+            <a href="playlist.html" class="text-romantic-pink font-bold border-b-2 border-romantic-pink">Playlist</a>
+            <a href="together.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Time Since</a>
+        </div>
     </nav>
-    <div class="container">
-        <header style="text-align: center; margin-bottom: 40px;">
-            <h1>🎶 The Soundtrack of Us</h1>
-            <p>Every note, every lyric holds a memory of you and me.</p>
+
+    <div class="container mx-auto px-6 max-w-4xl text-center">
+        <header class="mb-12 opacity-0" id="header">
+            <h1 class="text-7xl md:text-8xl font-serif text-gray-800 mb-6">So I made a playlist</h1>
+            <p class="font-handwritten text-romantic-pink text-3xl md:text-5xl">Waise toh your voice itself is music to my ears, but listen to these too</p>
         </header>
 
-        <div class="playlist-layout">
-            <div>
-                <div class="card playlist-card">
-                    <span class="card-icon">1️⃣</span>
-                    <div class="song-details">
-                        <h3 class="song-title">Our Song</h3>
-                        <p class="song-caption">"The one that always makes me want to dance with you in the kitchen."</p>
-                    </div>
-                </div>
-                <div class="card playlist-card">
-                    <span class="card-icon">2️⃣</span>
-                    <div class="song-details">
-                        <h3 class="song-title">First Date Jams</h3>
-                        <p class="song-caption">"Playing in the background on that nervous, beautiful first night."</p>
-                    </div>
-                </div>
-                <div class="card playlist-card">
-                    <span class="card-icon">3️⃣</span>
-                    <div class="song-details">
-                        <h3 class="song-title">Road Trip Anthem</h3>
-                        <p class="song-caption">"Volume up, windows down, driving towards our next adventure."</p>
-                    </div>
-                </div>
-                <div class="card playlist-card">
-                    <span class="card-icon">4️⃣</span>
-                    <div class="song-details">
-                        <h3 class="song-title">The Cozy Evening Ballad</h3>
-                        <p class="song-caption">"Perfect for cuddling up on the couch on a rainy day."</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="embed-container">
+        <div class="flex justify-center opacity-0" id="spotify-side">
+            <div class="w-full max-w-lg glass-card p-4 rounded-[2.5rem] shadow-2xl border-2 border-white/50">
                 <iframe 
-                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" 
+                    data-testid="embed-iframe" 
+                    style="border-radius:24px" 
+                    src="https://open.spotify.com/embed/playlist/720WWH8Qmm3Y1Vcl3R7Da9?utm_source=generator" 
                     width="100%" 
-                    height="100%" 
-                    frameborder="0" 
+                    height="450" 
+                    frameBorder="0" 
                     allowfullscreen="" 
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                     loading="lazy">
@@ -127,6 +92,56 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/navigation.js"></script>
+
+    <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 shadow-2xl opacity-0">
+        <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
+    </button>
+
+    <audio id="confetti-sfx" src="assets/sounds/confetti.mp3" preload="auto"></audio>
+
+    <script>
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            tl.to("#header", { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" })
+              .to("#spotify-side", { opacity: 1, y: 0, duration: 1.2, ease: "back.out(1.2)" }, "-=0.5")
+              .to("#confetti-btn", { opacity: 1, duration: 1 }, "-=0.5");
+
+            function createNote() {
+                const note = document.createElement('div');
+                note.className = 'music-note';
+                note.innerHTML = ['♫', '♪', '♥', '♬'][Math.floor(Math.random() * 4)];
+                note.style.left = (Math.random() * 90) + '%';
+                note.style.bottom = '10%';
+                document.body.appendChild(note);
+
+                gsap.to(note, {
+                    y: -window.innerHeight,
+                    x: (Math.random() - 0.5) * 300,
+                    opacity: 0.5,
+                    duration: 5 + Math.random() * 2,
+                    ease: "none",
+                    onComplete: () => note.remove()
+                });
+            }
+            setInterval(createNote, 1000);
+
+            // Event listener for the confetti button
+            document.getElementById('confetti-btn').addEventListener('click', () => {
+                const sfx = document.getElementById('confetti-sfx');
+                if (sfx) {
+                    sfx.currentTime = 0;
+                    sfx.play().catch(e => console.log("Audio play blocked until interaction:", e));
+                }
+
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#ff85a2', '#ffffff'] 
+                });
+            }); 
+        };
+    </script>
 </body>
 </html>

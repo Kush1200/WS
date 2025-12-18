@@ -3,105 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Hub - For My Love</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'romantic-pink': '#ff85a2',
+                        'romantic-purple': '#a78bfa',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        handwritten: ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            background-color: #050505;
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #fbcfe8, #e9d5ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .nav-card {
+            position: relative;
             overflow: hidden;
         }
 
-        .spider-font { font-family: 'Archivo Black', sans-serif; }
-
-        /* Subtle background web pattern */
-        .web-pattern {
-            background-image: radial-gradient(circle at 2px 2px, rgba(255, 0, 0, 0.1) 1px, transparent 0);
-            background-size: 40px 40px;
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s;
         }
 
-        /* Glitch text effect for that "Multiverse" feel */
-        .glitch-hover:hover {
-            text-shadow: 3px 0px 0px #ff004c, -3px 0px 0px #00fff2;
+        .nav-card:hover::before {
+            left: 100%;
         }
 
-        /* Float animation for the main character */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        .lottie-box {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem auto;
+        }
     </style>
 </head>
-<body class="text-white">
+<body class="min-h-screen pt-32 pb-20">
 
-    <div class="fixed inset-0 web-pattern opacity-50"></div>
-    <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-red-900/20 blur-[120px] rounded-full"></div>
-
-    <nav class="relative z-50 flex items-center justify-between px-10 py-8">
-        <div class="flex items-center space-x-10">
-            <button class="group space-y-1">
-                <div class="w-6 h-0.5 bg-white transition-all group-hover:w-8"></div>
-                <div class="w-8 h-0.5 bg-white"></div>
-                <div class="w-5 h-0.5 bg-white transition-all group-hover:w-8"></div>
-            </button>
-            <div class="hidden md:flex space-x-8 text-[10px] tracking-[0.3em] font-bold uppercase">
-                <a href="#" class="text-white border-b-2 border-red-600 pb-1">Home</a>
-                <a href="#" class="text-gray-500 hover:text-white transition">Movies</a>
-                <a href="#" class="text-gray-500 hover:text-white transition">Sound</a>
-                <a href="#" class="text-gray-500 hover:text-white transition">Sitting</a>
-            </div>
-        </div>
-        <div class="cursor-pointer hover:rotate-90 transition-transform duration-300">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z"/></svg>
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+        <div class="glass-card rounded-full px-8 py-4 flex justify-between items-center text-gray-700 font-semibold text-[10px] sm:text-xs md:text-sm">
+            <a href="home.html" class="hover:text-romantic-pink transition-colors">Home</a>
+            <a href="photos.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Photos</a>
+            <a href="letter.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Letter</a>
+            <a href="timeline.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Timeline</a>
+            <a href="playlist.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Playlist</a>
+            <a href="together.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Time Since</a>
         </div>
     </nav>
 
-    <main class="relative z-10 grid grid-cols-12 min-h-[80vh] items-center px-10 lg:px-20">
-        
-        <div class="col-span-12 lg:col-span-5 space-y-8">
-            <div class="relative">
-                <div class="absolute -left-6 top-0 bottom-0 w-1 bg-red-600"></div>
-                <h1 class="spider-font text-7xl md:text-8xl leading-[0.9] tracking-tighter glitch-hover transition-all cursor-default">
-                    Mount<br><span class="text-transparent border-text" style="-webkit-text-stroke: 1px white;">Quant</span>
-                </h1>
-            </div>
-
-            <p class="text-gray-400 text-sm md:text-base max-w-sm leading-relaxed font-light">
-                Teen Miles Morales becomes the Spider-Man of his universe and must join forces with five spider-powered individuals from other dimensions...
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-20">
+            <h1 class="text-7xl md:text-9xl font-serif text-gray-800 mb-6" id="stagger-title">
+                <span class="word">Happy</span>
+                <span class="word">Birthday,</span>
+                <br>
+                <span class="word font-handwritten text-romantic-pink block md:inline-block mt-4 md:mt-0">My Meka</span>
+            </h1>
+            <p class="text-gray-500 font-serif text-xl md:text-2xl font-light opacity-0" id="subtitle">
+                "The Pink To My Blue"
             </p>
-
-            <div class="flex items-center space-x-4">
-                <button class="bg-[#e21e22] hover:bg-red-700 text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-transform active:scale-95 shadow-[0_0_20px_rgba(226,30,34,0.4)]">
-                    Download
-                </button>
-                <button class="border border-gray-600 hover:bg-white hover:text-black px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all">
-                    Watch
-                </button>
-            </div>
         </div>
 
-        <div class="col-span-12 lg:col-span-7 relative flex justify-center items-center mt-10 lg:mt-0">
-            <div class="absolute w-full h-full bg-red-600/10 blur-[100px] animate-pulse"></div>
-            
-            <div class="animate-float">
-                <img src="/Users/kushagr/Desktop/website/Gemini_Generated_Image_rbzmmzrbzmmzrbzm.png" 
-                     alt="Miles Morales" 
-                     class="w-[90%] lg:w-full drop-shadow-[0_0_50px_rgba(226,30,34,0.3)]">
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <a href="photos.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="camera.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Our Gallery</h3>
+                <p class="text-gray-500 font-light">Mural for you.</p>
+            </a>
 
-            <div class="absolute bottom-0 right-0 flex flex-col items-center space-y-2 opacity-50 hover:opacity-100 transition">
-                <div class="w-6 h-6 border-r-2 border-b-2 border-white rotate-45"></div>
-                <div class="w-6 h-6 border-r-2 border-b-2 border-white rotate-45 -mt-3"></div>
-            </div>
+            <a href="letter.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Letter.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">The Letter</h3>
+                <p class="text-gray-500 font-light">Because how can I not write a letter to you</p>
+            </a>
+
+            <a href="timeline.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Timeline.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Our Journey</h3>
+                <p class="text-gray-500 font-light">Good good stuff.</p>
+            </a>
+
+            <a href="playlist.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Music Visualizer.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Playlist</h3>
+                <p class="text-gray-500 font-light">You are my music</p>
+            </a>
+
+            <a href="together.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Timer.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Time Since</h3>
+                <p class="text-gray-500 font-light">I am just a little cheesy like that</p>
+            </a>
         </div>
-    </main>
-
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex space-x-4 z-50">
-        <div class="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_white]"></div>
-        <div class="w-2.5 h-2.5 rounded-full bg-gray-700 hover:bg-gray-500 cursor-pointer transition"></div>
-        <div class="w-2.5 h-2.5 rounded-full bg-gray-700 hover:bg-gray-500 cursor-pointer transition"></div>
     </div>
 
+    <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 hover:-rotate-12 active:scale-95 transition-all duration-300 shadow-2xl opacity-0">
+        <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
+    </button>
+
+    <audio id="confetti-sfx" src="assets/sounds/confetti.mp3" preload="auto"></audio>
+
+    <script>
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            tl.to(".word", { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1, 
+                stagger: 0.3, 
+                ease: "back.out(1.7)" 
+            })
+            .to("#subtitle", { 
+                opacity: 1, 
+                duration: 1 
+            }, "-=0.5")
+            .to(".nav-card", { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1.2, 
+                stagger: 0.2, 
+                ease: "power4.out" 
+            }, "-=0.8")
+            .to("#confetti-btn", { 
+                opacity: 1, 
+                duration: 1, 
+                ease: "back.out(1.7)" 
+            }, "-=0.5");
+
+            // Event listener for the confetti button
+            document.getElementById('confetti-btn').addEventListener('click', () => {
+                const sfx = document.getElementById('confetti-sfx');
+                if (sfx) {
+                    sfx.currentTime = 0;
+                    sfx.play().catch(e => console.log("Audio play blocked until interaction:", e));
+                }
+
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#ff85a2', '#ffffff'] 
+                });
+            }); 
+        };
+    </script>
 </body>
 </html>

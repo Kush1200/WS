@@ -3,51 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise - Access Gate</title>
+    <title>TERMINAL - AUTHENTICATION REQUIRED</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'pink-soft': '#f7cac9',
-                        'lavender': '#e0b0ff',
-                        'accent': '#ff69b4',
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Montserrat', 'sans-serif'],
-                    },
-                    keyframes: {
-                        accessGranted: {
-                             '0%': { opacity: '0', transform: 'scale(0.5) rotate(-10deg)' },
-                             '50%': { opacity: '1', transform: 'scale(1.1) rotate(5deg)' },
-                             '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
-                        },
-                    },
-                    animation: {
-                        'access-granted': 'accessGranted 1.5s ease-out forwards',
-                    },
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body class="min-h-screen flex flex-col justify-center items-center p-5 bg-gradient-to-br from-pink-soft to-lavender font-sans text-gray-800">
-    <header class="text-center mb-10">
-        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-800">🗝️ A Heartfelt Challenge</h1>
-        <p class="mt-2 text-lg">Answer these 10 questions correctly to unlock your birthday website!</p>
-    </header>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <div class="bg-white/90 backdrop-blur-sm shadow-xl rounded-3xl p-10 quiz-screen quiz-card w-11/12 max-w-lg text-center animate-fade-in">
-        <div id="quiz-container">
-            Loading Quiz...
+    <style>
+        body {
+            background-color: #050505;
+            color: #ff85a2; /* Neon Pink Terminal Text */
+            font-family: 'Fira Code', monospace;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .crt-glow {
+            text-shadow: 0 0 10px rgba(255, 133, 162, 0.8), 0 0 20px rgba(255, 133, 162, 0.3);
+        }
+
+        .sci-fi-border {
+            border: 1px solid rgba(255, 133, 162, 0.3);
+            background: rgba(255, 133, 162, 0.03);
+            box-shadow: inset 0 0 15px rgba(255, 133, 162, 0.1);
+        }
+
+        .hidden-section {
+            display: none;
+            opacity: 0;
+        }
+
+        #bg-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-6">
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="intro-screen" class="z-10 text-center max-w-2xl">
+        <div class="mb-8 overflow-hidden">
+            <p id="intro-text" class="text-lg md:text-xl crt-glow leading-relaxed">
+                [SYSTEM WARNING]<br>
+                This Website is made for My Meka and is meant to be accessed only by her.<br>
+
+                ACCESS IS RESTRICTED TO MEKA.<br><br>
+                PROVE YOUR IDENTITY TO PROCEED.
+            </p>
         </div>
-        <p id="progress-text" class="mt-4 text-gray-500"></p>
-        <p id="access-status" class="font-serif text-3xl text-accent hidden mt-8"></p>
+        <button onclick="startQuiz()" id="begin-btn" class="sci-fi-border px-10 py-4 uppercase tracking-[0.4em] hover:bg-romantic-pink hover:text-black transition-all duration-300 opacity-0 transform translate-y-4">
+            Begin Authentication
+        </button>
     </div>
 
-    <script src="assets/js/quiz.js"></script>
+    <div id="quiz-container" class="hidden-section z-10 w-full max-w-xl sci-fi-border p-8 rounded-lg">
+        <div class="flex justify-between items-center mb-6 border-b border-romantic-pink/30 pb-4">
+            <span class="text-xs opacity-50 uppercase tracking-widest">Verification Status: In Progress</span>
+            <span id="q-counter" class="text-xs">01/05</span>
+        </div>
+        
+        <div id="question-box">
+            <h2 id="question-text" class="text-xl md:text-2xl mb-8 crt-glow min-h-[80px]">Loading security question...</h2>
+            
+            <div id="options-grid" class="grid grid-cols-1 gap-4">
+                </div>
+        </div>
+
+        <div id="error-msg" class="text-red-500 text-xs mt-6 text-center h-4 opacity-0 uppercase tracking-tighter">
+            * Incorrect Identity Detected. Try Again. *
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                q: "What platform did we meet on?",
+                a: ["Hinge", "Tinder", "Bumble", "LinkedIn"],
+                correct: 2
+            },
+            {
+                q: "Name of the guy from my office who approached you",
+                a: ["Yash Saliya", "Rahul Shah", "Pawan Wagh", "Pawan Dunna"],
+                correct: 3
+            },
+            {
+
+                q: "What does your 'Cute Doctor' say?",
+                a: ["Okey", "Wowza", "Cutie", "Are you lost bbg?"],               
+                 correct: 0
+            },
+            {
+
+                q: "Name of your colleague you thought I liked",
+                a: ["Aditi", "Shagun", "Riya", "Neha"],               
+                 correct: 1
+            },
+            {
+                q: "What beverage did I always order initially",
+                a: ["Cappuccino", "Latte", "Americano", "Chai"],
+                correct: 2
+            },
+            {
+                q: "Why did I always order that beverage?",
+                a: ["I wanted to seem manly", "It made me nostalgic", "I loved the taste of it", "It was the only drink I knew."],
+                correct: 3
+            },
+            {
+                q: "What food have I started loving because of you?",
+                a: ["Sushi", "Pizza", "Tiramisu", "Brownie"],
+                correct: 0
+            },
+            {
+                q: "Which friend duo of ours do we have to thank for bringing us together?",
+                a: ["Payal - Manashree", "Amulya - Apurva", "Payal - Vatsal", "Amulya - Vatsal"],
+                correct: 0
+            },
+            {
+                q: "When we met on 31st March 2024, where did we meet?",
+                a: ["Dmart", "Pair-a-dice", "Blue Tokai", "FreshPick"],
+                correct: 0
+            },
+            {
+                q: "What do I look at while working?",
+                a: ["Lighters", "Temperature", "Candles", "Plants"],
+                correct: 2
+            },
+            {
+                q: "What is the Asian place we hated?",
+                a: ["Foo", "Kofuku", "Sesami", "Eve"],
+                correct: 1
+            },
+            {
+                q: "What is the legendary thing we love doing?",
+                a: ["Waltz", "Tango", "Transfer", "Hire"],
+                correct: 2
+            }
+            // Add more questions here...
+        ];
+
+        let currentQ = 0;
+
+        // 1. Initial Intro Animation
+        window.onload = () => {
+            gsap.from("#intro-text", { opacity: 0, duration: 2 });
+            gsap.to("#begin-btn", { opacity: 1, y: 0, duration: 1, delay: 1.5 });
+            initMatrixBackground();
+        };
+
+        function startQuiz() {
+            const tl = gsap.timeline();
+            tl.to("#intro-screen", { opacity: 0, scale: 0.9, duration: 0.8, onComplete: () => {
+                document.getElementById('intro-screen').classList.add('hidden');
+                document.getElementById('quiz-container').classList.remove('hidden-section');
+                document.getElementById('quiz-container').style.display = 'block';
+                loadQuestion();
+            }})
+            .to("#quiz-container", { opacity: 1, duration: 1 });
+        }
+
+        function loadQuestion() {
+            const data = quizData[currentQ];
+            document.getElementById('q-counter').innerText = `${(currentQ + 1).toString().padStart(2, '0')}/${quizData.length.toString().padStart(2, '0')}`;
+            document.getElementById('question-text').innerText = data.q;
+            
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            
+            data.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = "sci-fi-border p-4 text-left hover:bg-romantic-pink/10 transition-colors uppercase text-sm tracking-wider";
+                btn.innerText = `> ${opt}`;
+                btn.onclick = () => checkAnswer(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(choice) {
+            if (choice === quizData[currentQ].correct) {
+                currentQ++;
+                if (currentQ < quizData.length) {
+                    gsap.to("#question-box", { opacity: 0, x: -20, duration: 0.3, onComplete: () => {
+                        loadQuestion();
+                        gsap.to("#question-box", { opacity: 1, x: 0, duration: 0.3 });
+                    }});
+                } else {
+                    handleSuccess();
+                }
+            } else {
+                gsap.to("#error-msg", { opacity: 1, duration: 0.2, repeat: 3, yoyo: true });
+            }
+        }
+
+        function handleSuccess() {
+            document.getElementById('question-box').innerHTML = `
+                <h2 class="text-3xl crt-glow text-center uppercase tracking-[0.2em] animate-pulse">
+                    Access Granted.<br>Welcome, Meka.
+                </h2>
+            `;
+            setTimeout(() => {
+                window.location.href = "home.html"; // Redirect to the Home Hub
+            }, 2000);
+        }
+
+        // 2. Matrix-style background animation
+        function initMatrixBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+
+            function draw() {
+                ctx.fillStyle = "rgba(5, 5, 5, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#ff85a222"; // Very faint pink
+                ctx.font = fontSize + "px monospace";
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 33);
+        }
+    </script>
 </body>
 </html>

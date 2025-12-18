@@ -85,16 +85,18 @@
             <a href="letter.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Letter</a>
             <a href="timeline.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Timeline</a>
             <a href="playlist.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Playlist</a>
-            <a href="together.html" class="text-gray-400 hover:text-romantic-pink transition-colors">Time Since</a>
+            <a href="together.html" class="text-romantic-pink font-bold border-b-2 border-romantic-pink">Time Since</a>
         </div>
     </nav>
 
     <div class="container mx-auto px-6 text-center">
         <header class="mb-16 opacity-0" id="header">
-            <h1 class="font-handwritten text-romantic-pink text-4xl md:text-6xl mb-6 leading-tight">
-                "Lets see how many days has it been since..."
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-gray-800 mb-6 leading-tight">
+                Lets see how many days has it been since...
             </h1>
-            <p class="text-gray-600 font-serif italic text-xl">So that we dont have to mentally calculated each time</p>
+            <p class="font-handwritten text-romantic-pink text-3xl md:text-5xl px-4">
+                So that we don't have to mentally calculate each time
+            </p>
         </header>
 
         <div class="flex flex-col items-center space-y-10">
@@ -129,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="timer-card glass-card rounded-[3.5rem] p-12 w-full max-w-3xl opacity-0 transform translate-y-10 border-2 border-romantic-pink/20">
+            <div class="timer-card glass-card rounded-[3.5rem] p-12 w-full max-w-3xl opacity-0 transform translate-y-10 border-2 border-romantic-pink/20 shadow-xl shadow-romantic-pink/5">
                 <h2 class="text-romantic-pink tracking-[0.4em] uppercase text-xs font-bold mb-8">Since you've been mine</h2>
                 <div class="flex flex-wrap justify-center gap-8 md:gap-12">
                     <div class="flex flex-col items-center">
@@ -157,6 +159,8 @@
     <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 hover:-rotate-12 active:scale-95 transition-all duration-300 shadow-2xl opacity-0">
         <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
     </button>
+
+    <audio id="confetti-sfx" src="assets/sounds/confetti.mp3" preload="auto"></audio>
 
     <script>
         // DATE CONFIGURATION
@@ -208,14 +212,21 @@
               }, "-=1")
               .to("#confetti-btn", { opacity: 1, duration: 1, ease: "back.out(1.7)" }, "-=0.5");
 
+            // Event listener for the confetti button
             document.getElementById('confetti-btn').addEventListener('click', () => {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#ff85a2', '#fce7f3', '#ffb3c1', '#ffffff']
+                const sfx = document.getElementById('confetti-sfx');
+                if (sfx) {
+                    sfx.currentTime = 0;
+                    sfx.play().catch(e => console.log("Audio play blocked until interaction:", e));
+                }
+
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#ff85a2', '#ffffff'] 
                 });
-            });
+            }); 
         };
     </script>
 </body>

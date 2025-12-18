@@ -274,8 +274,8 @@
             <div class="mt-32 mb-20 text-center opacity-0 transform translate-y-10" id="timeline-footer">
             <div class="glass-card max-w-3xl mx-auto rounded-[3rem] p-12">
                 <p class="font-handwritten text-romantic-pink text-3xl md:text-4xl mb-6 leading-relaxed">
-                    "Every moment with you is important to me. <br class="hidden md:block"> 
-                    If only I could note it all over here"
+                    Every moment with you is important to me. <br class="hidden md:block"> 
+                    If only I could note it all over here
                 </p>
                 <p class="text-gray-500 font-light text-sm md:text-base italic">
                     P.S: If I forgot any important dates, let me know and I will add them here.
@@ -287,6 +287,8 @@
     <button id="confetti-btn" class="fixed bottom-10 left-10 z-[100] w-16 h-16 md:w-20 md:h-20 glass-card rounded-full p-0 flex items-center justify-center overflow-hidden hover:scale-110 hover:-rotate-12 active:scale-95 transition-all duration-300 shadow-2xl opacity-0">
         <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
     </button>
+
+    <audio id="confetti-sfx" src="assets/sounds/confetti.mp3" preload="auto"></audio>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
@@ -345,17 +347,21 @@
                 ease: "back.out(1.7)" 
             }, "-=0.5");
 
-            // 5. Confetti Interaction Logic
+            // Event listener for the confetti button
             document.getElementById('confetti-btn').addEventListener('click', () => {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#ff85a2', '#fce7f3', '#ffb3c1', '#ffffff']
-                });
-            });
+                const sfx = document.getElementById('confetti-sfx');
+                if (sfx) {
+                    sfx.currentTime = 0;
+                    sfx.play().catch(e => console.log("Audio play blocked until interaction:", e));
+                }
 
-            
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#ff85a2', '#ffffff'] 
+                });
+            }); 
         };
     </script>
 

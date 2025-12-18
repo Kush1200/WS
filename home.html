@@ -74,7 +74,6 @@
             left: 100%;
         }
 
-        /* Helper for the staggered word animation */
         .word {
             display: inline-block;
             opacity: 0;
@@ -115,13 +114,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            
             <a href="photos.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
                 <div class="lottie-box">
                     <lottie-player src="camera.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Our Gallery</h3>
-                <p class="text-gray-500 font-light">The story of us in pictures.</p>
+                <p class="text-gray-500 font-light">Mural for you.</p>
             </a>
 
             <a href="letter.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
@@ -129,7 +127,7 @@
                     <lottie-player src="Letter.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">The Letter</h3>
-                <p class="text-gray-500 font-light">Words written just for you.</p>
+                <p class="text-gray-500 font-light">Because how can I not write a letter to you</p>
             </a>
 
             <a href="timeline.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
@@ -137,9 +135,24 @@
                     <lottie-player src="Timeline.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Our Journey</h3>
-                <p class="text-gray-500 font-light">Every beautiful milestone.</p>
+                <p class="text-gray-500 font-light">Good good stuff.</p>
             </a>
 
+            <a href="playlist.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Music Visualizer.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Playlist</h3>
+                <p class="text-gray-500 font-light">You are my music</p>
+            </a>
+
+            <a href="together.html" class="nav-card glass-card rounded-[3.5rem] p-12 text-center opacity-0 transform translate-y-12">
+                <div class="lottie-box">
+                    <lottie-player src="Timer.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-gray-800 mb-2">Time Since</h3>
+                <p class="text-gray-500 font-light">I am just a little cheesy like that</p>
+            </a>
         </div>
     </div>
 
@@ -147,11 +160,12 @@
         <img src="confetti_button.PNG" alt="Celebrate" class="w-full h-full object-cover">
     </button>
 
+    <audio id="confetti-sfx" src="assets/sounds/confetti.mp3" preload="auto"></audio>
+
     <script>
         window.onload = () => {
             const tl = gsap.timeline();
 
-            // 1. Staggered Word Animation
             tl.to(".word", { 
                 opacity: 1, 
                 y: 0, 
@@ -159,12 +173,10 @@
                 stagger: 0.3, 
                 ease: "back.out(1.7)" 
             })
-            // 2. Subtitle Fade
             .to("#subtitle", { 
                 opacity: 1, 
                 duration: 1 
             }, "-=0.5")
-            // 3. Navigation Cards Stagger
             .to(".nav-card", { 
                 opacity: 1, 
                 y: 0, 
@@ -172,22 +184,27 @@
                 stagger: 0.2, 
                 ease: "power4.out" 
             }, "-=0.8")
-            // 4. Confetti Button Entry
             .to("#confetti-btn", { 
                 opacity: 1, 
                 duration: 1, 
                 ease: "back.out(1.7)" 
             }, "-=0.5");
 
-            // 3. Confetti Interaction Logic
+            // Event listener for the confetti button
             document.getElementById('confetti-btn').addEventListener('click', () => {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#ff85a2', '#fce7f3', '#ffb3c1', '#ffffff']
+                const sfx = document.getElementById('confetti-sfx');
+                if (sfx) {
+                    sfx.currentTime = 0;
+                    sfx.play().catch(e => console.log("Audio play blocked until interaction:", e));
+                }
+
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#ff85a2', '#ffffff'] 
                 });
-            });
+            }); 
         };
     </script>
 </body>
