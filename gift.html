@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Choose Your Gift - Meka</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,7 +33,11 @@
             background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #fbcfe8, #e9d5ff);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            overflow: hidden;
+            /* Changed overflow to hidden only on X to allow vertical scroll if needed */
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes gradientBG {
@@ -45,6 +49,7 @@
         .glass-card {
             background: rgba(255, 185, 208, 0.8);
             backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
@@ -81,51 +86,52 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center px-6">
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-20">
     <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50">
-        <div class="glass-card rounded-full px-10 py-4 flex justify-center items-center text-gray-700 font-semibold text-xs md:text-sm shadow-lg">
+        <div class="glass-card rounded-full px-8 py-3 flex justify-center items-center text-gray-700 font-semibold text-xs shadow-lg">
             <a href="home.html" class="text-romantic-pink hover:scale-110 transition-transform duration-300 flex items-center gap-2">
-                <span></span> Home
+                 Home
             </a>
         </div>
     </nav>
 
-    <div class="text-center mb-12 opacity-0" id="title-section">
-        <h1 class="text-5xl md:text-7xl font-serif text-gray-800 mb-4">Choose Your Gift</h1>
-        <p class="text-gray-500 font-handwritten text-3xl text-romantic-pink">Which one is calling to you?</p>
+    <div class="text-center mb-8 md:mb-12 opacity-0" id="title-section">
+        <h1 class="text-4xl md:text-7xl font-serif text-gray-800 mb-2 md:mb-4">Choose Your Gift</h1>
+        <p class="text-gray-500 font-handwritten text-2xl md:text-3xl text-romantic-pink">Which one is calling to you?</p>
     </div>
 
-    <div class="flex flex-wrap justify-center gap-6 max-w-5xl opacity-0" id="card-container">
-        <div class="gift-card w-48 h-72 md:w-64 md:h-80 perspective-1000 group cursor-default" onclick="handleCardClick(this)">
+    <div class="flex flex-nowrap md:flex-wrap justify-center items-center gap-3 md:gap-6 w-full max-w-5xl opacity-0" id="card-container">
+        
+        <div class="gift-card w-28 h-44 sm:w-40 sm:h-60 md:w-64 md:h-80 perspective-1000 flex-shrink-0 cursor-default" onclick="handleCardClick(this)">
             <div class="card-inner">
-                <div class="card-face glass-card border-2 border-white/50 text-white text-6xl font-serif">?</div>
-                <div class="card-face card-back shadow-2xl overflow-hidden p-2">
+                <div class="card-face glass-card border-2 border-white/50 text-white text-4xl md:text-6xl font-serif">?</div>
+                <div class="card-face card-back shadow-2xl overflow-hidden p-1 md:p-2">
                     <img src="huda.png" class="w-full h-full object-cover rounded-xl" alt="Meka's Gift">
                 </div>
             </div>
         </div>
 
-        <div class="gift-card w-48 h-72 md:w-64 md:h-80 perspective-1000 group cursor-default" onclick="handleCardClick(this)">
+        <div class="gift-card w-28 h-44 sm:w-40 sm:h-60 md:w-64 md:h-80 perspective-1000 flex-shrink-0 cursor-default" onclick="handleCardClick(this)">
             <div class="card-inner">
-                <div class="card-face glass-card border-2 border-white/50 text-white text-6xl font-serif">?</div>
-                <div class="card-face card-back shadow-2xl overflow-hidden p-2">
+                <div class="card-face glass-card border-2 border-white/50 text-white text-4xl md:text-6xl font-serif">?</div>
+                <div class="card-face card-back shadow-2xl overflow-hidden p-1 md:p-2">
                     <img src="huda.png" class="w-full h-full object-cover rounded-xl" alt="Meka's Gift">
                 </div>
             </div>
         </div>
 
-        <div class="gift-card w-48 h-72 md:w-64 md:h-80 perspective-1000 group cursor-default" onclick="handleCardClick(this)">
+        <div class="gift-card w-28 h-44 sm:w-40 sm:h-60 md:w-64 md:h-80 perspective-1000 flex-shrink-0 cursor-default" onclick="handleCardClick(this)">
             <div class="card-inner">
-                <div class="card-face glass-card border-2 border-white/50 text-white text-6xl font-serif">?</div>
-                <div class="card-face card-back shadow-2xl overflow-hidden p-2">
+                <div class="card-face glass-card border-2 border-white/50 text-white text-4xl md:text-6xl font-serif">?</div>
+                <div class="card-face card-back shadow-2xl overflow-hidden p-1 md:p-2">
                     <img src="huda.png" class="w-full h-full object-cover rounded-xl" alt="Meka's Gift">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mt-12 opacity-0" id="controls">
-        <button id="shuffle-btn" onclick="startShuffle()" class="glass-card px-10 py-4 rounded-full text-gray-700 font-bold text-xl hover:bg-romantic-pink hover:text-white transition-all shadow-xl">
+    <div class="mt-10 md:mt-12 opacity-0" id="controls">
+        <button id="shuffle-btn" onclick="startShuffle()" class="glass-card px-8 py-3 md:px-10 md:py-4 rounded-full text-gray-700 font-bold text-lg md:text-xl hover:bg-romantic-pink hover:text-white transition-all shadow-xl active:scale-95">
             Shuffle Cards 
         </button>
     </div>
@@ -135,7 +141,7 @@
         let hasPicked = false;
 
         window.onload = () => {
-            gsap.to("#title-section", { opacity: 1, y: -20, duration: 1 });
+            gsap.to("#title-section", { opacity: 1, y: 0, duration: 1 });
             gsap.to("#card-container", { opacity: 1, duration: 1, delay: 0.5 });
             gsap.to("#controls", { opacity: 1, duration: 1, delay: 0.8 });
         };
@@ -147,7 +153,11 @@
             btn.innerHTML = "Shuffling...";
             btn.classList.add('opacity-50', 'pointer-events-none');
 
-            // GSAP Shuffle Animation: Physically swapping positions
+            // Dynamic Distance Calculation: 
+            // On desktop we use 220px, on mobile we use a percentage of screen width
+            const isMobile = window.innerWidth < 768;
+            const moveX = isMobile ? window.innerWidth * 0.25 : 220;
+
             let tl = gsap.timeline({
                 onComplete: () => {
                     isShuffled = true;
@@ -157,15 +167,13 @@
                 }
             });
 
-            // 6 rapid swaps
             for (let i = 0; i < 6; i++) {
                 const direction = i % 2 === 0 ? 1 : -1;
-                tl.to(cards[0], { x: 220 * direction, duration: 0.15, ease: "power1.inOut" }, i * 0.2)
-                  .to(cards[2], { x: -220 * direction, duration: 0.15, ease: "power1.inOut" }, i * 0.2)
-                  .to(cards[1], { y: direction * 30, duration: 0.15, ease: "power1.inOut" }, i * 0.2);
+                tl.to(cards[0], { x: moveX * direction, duration: 0.15, ease: "power1.inOut" }, i * 0.2)
+                  .to(cards[2], { x: -moveX * direction, duration: 0.15, ease: "power1.inOut" }, i * 0.2)
+                  .to(cards[1], { y: direction * (isMobile ? 15 : 30), duration: 0.15, ease: "power1.inOut" }, i * 0.2);
             }
             
-            // Return to center at end
             tl.to(cards, { x: 0, y: 0, duration: 0.4, ease: "back.out(1.2)" });
         }
 
@@ -175,21 +183,18 @@
             hasPicked = true;
             element.classList.add('flipped');
 
-            // Celebrate!
             confetti({
-                particleCount: 150,
+                particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
                 colors: ['#ff85a2', '#ffffff']
             });
 
-            // Dim the other cards
             const cards = document.querySelectorAll('.gift-card');
             cards.forEach(card => {
                 if (card !== element) {
                     gsap.to(card, { opacity: 0.3, scale: 0.85, duration: 0.6 });
-                    card.style.cursor = "Default";
-                    // cards.forEach(card => card.style.cursor = "pointer");
+                    card.style.cursor = "default";
                 }
             });
         }
